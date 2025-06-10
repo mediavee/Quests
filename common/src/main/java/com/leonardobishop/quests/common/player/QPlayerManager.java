@@ -80,7 +80,7 @@ public final class QPlayerManager {
         Objects.requireNonNull(uuid, "uuid cannot be null");
 
         final QPlayer qPlayer = this.getPlayer(uuid);
-        if (qPlayer == null) {
+        if (qPlayer == null || qPlayer.isEphemeral()) {
             return CompletableFuture.completedFuture(null);
         }
 
@@ -116,7 +116,7 @@ public final class QPlayerManager {
         Objects.requireNonNull(uuid, "uuid cannot be null");
 
         final QPlayer qPlayer = this.getPlayer(uuid);
-        if (qPlayer == null) {
+        if (qPlayer == null || qPlayer.isEphemeral()) {
             return;
         }
 
@@ -133,6 +133,9 @@ public final class QPlayerManager {
 
     private void save(final QPlayerData playerData) {
         Objects.requireNonNull(playerData, "playerData cannot be null");
+
+        if (getPlayer(playerData.playerUUID()).isEphemeral())
+            return;
 
         final String uuidString = playerData.playerUUID().toString();
         this.plugin.getQuestsLogger().debug("Saving player " + uuidString + "...");

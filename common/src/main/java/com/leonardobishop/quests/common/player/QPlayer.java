@@ -25,6 +25,7 @@ public final class QPlayer {
     private final Quests plugin;
     private final QPlayerData playerData;
     private QuestController questController;
+    private boolean isEphemeral = false;
 
     public QPlayer(final Quests plugin, final QPlayerData playerData, final QuestController questController) {
         this.plugin = plugin;
@@ -253,6 +254,24 @@ public final class QPlayer {
         Objects.requireNonNull(questController, "questController cannot be null");
 
         this.questController = questController;
+    }
+
+    /**
+     * Sets whether or not this player is ephemeral. Ephemeral players are not saved to disk.
+     *
+     * @param ephemeral true if the player is ephemeral, false otherwise
+     */
+    public void setEphemeral(boolean ephemeral) {
+        this.isEphemeral = ephemeral;
+    }
+
+    /**
+     * Gets whether or not this player is ephemeral. Ephemeral players are not saved to disk.
+     *
+     * @return true if the player is ephemeral, false otherwise
+     */
+    public boolean isEphemeral() {
+        return this.isEphemeral;
     }
 
     @Override

@@ -37,6 +37,9 @@ public class PlayerJoinListener implements Listener {
             plugin.getPlayerManager().loadPlayer(player.getUniqueId()).thenAccept(qPlayer -> {
                 if (qPlayer == null) return;
                 plugin.getScheduler().doSync(() -> {
+                    if (player.hasPermission("quests.ignore"))
+                        qPlayer.setEphemeral(true);
+
                     // run a full check to check for any missed quest completions
                     plugin.getQuestCompleter().queueFullCheck(qPlayer.getQuestProgressFile());
 
