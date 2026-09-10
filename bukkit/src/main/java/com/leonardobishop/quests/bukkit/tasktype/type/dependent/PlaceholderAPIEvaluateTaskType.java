@@ -130,7 +130,8 @@ public final class PlaceholderAPIEvaluateTaskType extends BukkitTaskType {
 
             super.debug("Operator = " + operator, quest.getId(), task.getId(), player.getUniqueId());
 
-            boolean async = TaskUtils.getConfigBoolean(task, "async", false);
+            boolean forceAsync = plugin.getConfig().getBoolean("force-async-placeholder-evaluation", false);
+            boolean async = forceAsync || TaskUtils.getConfigBoolean(task, "async", false);
             CompletableFuture<String> future = evaluate(player, placeholder, async);
 
             future.thenAccept(evaluatedString -> {
